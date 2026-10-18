@@ -1,0 +1,7 @@
+[versions]
+# Plugins
+plugin-java-formatting = "0.4.0"
+
+[plugins]
+# https://maven.blamejared.com/net/mezzdev/java-formatting/net.mezzdev.java-formatting.gradle.plugin/maven-metadata.xml
+java-formatting = { id = "net.mezzdev.java-formatting", version.ref = "plugin-java-formatting" }
