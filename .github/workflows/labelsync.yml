@@ -12,6 +12,6 @@ permissions:
 jobs:
   label_sync:
     name: Label Sync
-    uses: Jaronline/.github/.github/workflows/reusable-labelsync.yml@3e223616de3238cb5fcbcffa93d8306bd5529295 # main
+    uses: Jaronline/.github/.github/workflows/reusable-labelsync.yml@ceb420e4b699c12d547cf4d5c0c098bea2188def # main
     with:
       repository: 'Jaronline/gradle-plugins'

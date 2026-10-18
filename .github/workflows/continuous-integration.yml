@@ -58,10 +58,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Build Result
-        uses: Jaronline/.github/actions/check-job-or-step-result@3e223616de3238cb5fcbcffa93d8306bd5529295 # main
+        uses: Jaronline/.github/actions/check-job-or-step-result@ceb420e4b699c12d547cf4d5c0c098bea2188def # main
         with:
           result: ${{ needs.build.result }}
       - name: Check Lint Result
-        uses: Jaronline/.github/actions/check-job-or-step-result@3e223616de3238cb5fcbcffa93d8306bd5529295 # main
+        uses: Jaronline/.github/actions/check-job-or-step-result@ceb420e4b699c12d547cf4d5c0c098bea2188def # main
         with:
           result: ${{ needs.lint.result }}
