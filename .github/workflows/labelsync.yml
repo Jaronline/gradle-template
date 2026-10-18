@@ -14,4 +14,4 @@ jobs:
     name: Label Sync
     uses: Jaronline/.github/.github/workflows/reusable-labelsync.yml@main
     with:
-      repository: 'Jaronline/gradle-plugins'
+      repository: 'Jaronline/gradle-template'
