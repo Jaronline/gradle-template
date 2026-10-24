@@ -1,4 +1,5 @@
 plugins {
+    id("dev.jaronline.changelog")
     alias(libs.plugins.java.formatting)
 }
 

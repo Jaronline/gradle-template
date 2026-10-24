@@ -51,3 +51,6 @@ gradle-app.setting
 .idea/
 .vscode/
 .vs/
+
+# Changelog
+release-notes.txt
