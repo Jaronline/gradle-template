@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
 	implementation(libs.plugin.changelog)
+	implementation(libs.plugin.spotless.changelog)
 }
 
 gradlePlugin {
@@ -19,6 +20,10 @@ gradlePlugin {
 		register("changelog") {
 			id = "dev.jaronline.changelog"
 			implementationClass = "dev.jaronline.gradle.ChangelogPlugin"
+		}
+		register("project") {
+			id = "dev.jaronline.project"
+			implementationClass = "dev.jaronline.gradle.ProjectPlugin"
 		}
 	}
 }

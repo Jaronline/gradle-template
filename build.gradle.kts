@@ -1,5 +1,5 @@
 plugins {
-    id("dev.jaronline.changelog")
+    id("dev.jaronline.project")
     alias(libs.plugins.java.formatting)
 }
 
