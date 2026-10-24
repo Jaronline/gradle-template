@@ -1,5 +1,6 @@
 package dev.jaronline.gradle
 
+import com.diffplug.spotless.changelog.gradle.ChangelogPlugin as SpotlessChangelogPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -16,12 +17,12 @@ class ChangelogPlugin : Plugin<Project> {
 private fun Project.configureChangelog() {
 	pluginManager.apply(BuildPropertiesPlugin::class.java)
 	pluginManager.apply(JBChangelogPlugin::class.java)
+	pluginManager.apply(SpotlessChangelogPlugin::class.java)
 
 	val buildProperties = the<BuildPropertiesExtension>()
 
 	extensions.configure<ChangelogPluginExtension> {
 		versionPrefix.set(if (project == rootProject) "v" else "${project.name}@")
-		version.set(project.version.toString())
 		introduction.set("""
 			All notable changes to this project will be documented in this file.
 			

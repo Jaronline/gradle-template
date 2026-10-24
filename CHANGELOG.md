@@ -8,11 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Added
 
-- buildSrc: Changelog configuration and plugin for `org.jetbrains.changelog`
+- buildSrc: Project plugin with automatic version
+- buildSrc: Changelog configuration and plugin with `org.jetbrains.changelog` and `com.diffplug.spotless-changelog`
 - buildSrc: Build properties plugin
 - GitHub: Miscellaneous issue template
 - GitHub: Bug report issue template
-- GitHub: Gradle continuous integration with build and lint jobs
+- GitHub: Gradle continuous integration with build and check jobs
 - GitHub: Automatic issue and PR labels configuration and workflow
 - GitHub: Automatic label synchronization configuration and workflow
 - Automatic Git hooks configuration to `.githooks/`

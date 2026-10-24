@@ -2,11 +2,14 @@
 # Plugins
 plugin-java-formatting = "0.4.0"
 plugin-changelog = "2.5.0"
+plugin-spotless-changelog = "3.1.2"
 
 [libraries]
 # Plugins
 # https://plugins.gradle.org/plugin/org.jetbrains.changelog
 plugin-changelog = { group = "org.jetbrains.changelog", name = "org.jetbrains.changelog.gradle.plugin", version.ref = "plugin-changelog" }
+# https://plugins.gradle.org/plugin/com.diffplug.spotless-changelog
+plugin-spotless-changelog = { group = "com.diffplug.spotless-changelog", name = "spotless-changelog-plugin-gradle", version.ref = "plugin-spotless-changelog" }
 
 [plugins]
 # https://maven.blamejared.com/net/mezzdev/java-formatting/net.mezzdev.java-formatting.gradle.plugin/maven-metadata.xml
