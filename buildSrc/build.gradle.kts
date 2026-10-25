@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
+	subprojects.forEach(this::runtimeOnly)
 	implementation(project(":build-properties"))
 	implementation(libs.plugin.changelog)
 	implementation(libs.plugin.spotless.changelog)
@@ -21,10 +22,6 @@ gradlePlugin {
 		register("project") {
 			id = "dev.jaronline.project"
 			implementationClass = "dev.jaronline.gradle.ProjectPlugin"
-		}
-		register("test") {
-			id = "dev.jaronline.test"
-			implementationClass = "dev.jaronline.gradle.TestPlugin"
 		}
 	}
 }

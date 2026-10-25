@@ -10,5 +10,7 @@ rootProject.name = "buildSrc"
 include(
     "build-properties",
     // Remove this along with the kotlin directory if you don't need kotlin
-    "kotlin"
+    "kotlin",
+    // Remove this along with the test directory if you don't need to test
+    "test"
 )
