@@ -3,9 +3,7 @@
 echo "Running git pre-commit hook."
 echo "Running Spotless Check..."
 
-stagedFiles=$(git diff --staged --name-only)
-
-if ! SPOTLESS_TARGETS="$stagedFiles" ./gradlew spotlessCheck --quiet; then
+if ! ./gradlew spotlessCheck --quiet; then
   echo
   echo -e "\e[31mSpotless Check found violations.\e[0m"
   echo "Run spotlessApply in your terminal and fix the issues before trying to commit again."
