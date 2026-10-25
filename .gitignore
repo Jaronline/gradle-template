@@ -54,3 +54,7 @@ gradle-app.setting
 
 # Changelog
 release-notes.txt
+
+# Keys and Secrets
+signing-key
+*.pub
