@@ -1,0 +1,110 @@
+name: Release
+run-name: Release ${{ inputs.project }}
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: The project to release
+        required: true
+        type: choice
+        options:
+          - all
+        default: all
+
+permissions:
+  id-token: write
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}|${{ github.ref_name }}|${{ inputs.project }}
+  cancel-in-progress: true
+
+env:
+  JAVA_DISTRIBUTION: ${{ vars.JAVA_DISTRIBUTION || 'microsoft' }}
+  JAVA_VERSION: ${{ vars.JAVA_VERSION || 25 }}
+  WORKING_DIRECTORY: ${{ inputs.project == 'all' && '.' || inputs.project }}
+  GRADLE_PROJECT_PREFIX: ${{ inputs.project == 'all' && '' || format(':{0}', inputs.project) }}
+  GIT_TAG_PREFIX: ${{ inputs.project == 'all' && 'v' || format('{0}@', inputs.project) }}
+  GIT_COMMIT_SCOPE: ${{ inputs.project == 'all' && '' || format('({0})', inputs.project) }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-tags: true
+      - name: Setup Java
+        uses: actions/setup-java@v6.1.0
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.4.0
+      - name: Setup SSH Signing Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ env.SSH_SIGNING_KEY }}" > ~/.ssh/signing_key
+          chmod 600 ~/.ssh/signing_key
+          ssh-keygen -y -f ~/.ssh/signing_key > ~/.ssh/signing_key.pub
+        env:
+          SSH_SIGNING_KEY: ${{ secrets.CI_SSH_SIGNING_KEY }}
+      - name: Configure Git
+        run: |
+          git config --local user.email "${GITHUB_EMAIL}"
+          git config --local user.name "${GITHUB_USER}"
+          git config --local gpg.format ssh
+          git config --local user.signingkey ~/.ssh/signing_key.pub
+          git config --local commit.gpgsign true
+          git config --local tag.gpgsign true
+        env:
+          GITHUB_USER: ${{ vars.CI_USER }}
+          GITHUB_EMAIL: ${{ vars.CI_EMAIL }}
+      - name: Get Gradle properties
+        id: next_version
+        run: |
+          echo version=$(./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:properties --property=version -q | grep -Po '(?<=version: ).*') >> "$GITHUB_OUTPUT"
+      - name: Check tag existence
+        run: |
+          if git rev-parse "${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}" >/dev/null 2>&1; then
+            echo ::error::Tag ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }} already exists!
+            exit 1
+          fi
+          exit 0
+      - name: Patch changelog
+        run: |
+          ./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:patchChangelog
+      - name: Check changes in CHANGELOG.md
+        run: |
+          if git diff --exit-code CHANGELOG.md >/dev/null 2>&1; then
+            echo ::error::No changes found for release ${{ steps.next_version.outputs.version }}!
+            exit 1
+          fi
+          exit 0
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: Get release notes
+        run: |
+          ./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:getChangelog --no-header --no-empty-sections --project-version=${{ steps.next_version.outputs.version }} --output-file=release-notes.md
+      - name: Commit changelog
+        run: |
+          git add CHANGELOG.md
+          git commit -m "chore${{ env.GIT_COMMIT_SCOPE }}: release ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}"
+          git pull --rebase origin main
+          git push origin main
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      - name: Create tag
+        run: |
+          git tag -s -m "${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}" ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}
+          git push --tags origin
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      - name: Create release
+        run: |
+          gh release create ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }} --latest --notes-file release-notes.md --verify-tag
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
