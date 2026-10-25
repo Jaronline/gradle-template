@@ -25,6 +25,10 @@ gradlePlugin {
 			id = "dev.jaronline.project"
 			implementationClass = "dev.jaronline.gradle.ProjectPlugin"
 		}
+		register("test") {
+			id = "dev.jaronline.test"
+			implementationClass = "dev.jaronline.gradle.TestPlugin"
+		}
 	}
 }
 
