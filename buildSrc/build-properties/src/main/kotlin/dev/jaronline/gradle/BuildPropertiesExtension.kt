@@ -14,6 +14,7 @@ abstract class BuildPropertiesExtension(private val project: Project) {
 	val githubUrl = gradleProperty("github_url")
 
 	val javaVersion = versionLookup("java")
+    val pitestJunit5Version = versionLookup("pitest.junit5")
 
 	fun gradleProperty(propertyName: String): Provider<String> {
 		return project.providers.gradleProperty(propertyName)
