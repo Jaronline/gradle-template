@@ -14,6 +14,7 @@ plugin-changelog = "2.5.0"
 plugin-spotless-changelog = "3.1.2"
 plugin-dokka = "2.2.0"
 plugin-pitest = "1.19.0"
+plugin-spotless = "8.10.4"
 
 [libraries]
 # Testing
@@ -32,6 +33,8 @@ plugin-spotless-changelog = { group = "com.diffplug.spotless-changelog", name = 
 plugin-dokka = { group = "org.jetbrains.dokka", name = "org.jetbrains.dokka.gradle.plugin", version.ref = "plugin-dokka" }
 # https://plugins.gradle.org/plugin/info.solidsoft.pitest
 plugin-pitest = { group = "info.solidsoft.pitest", name = "info.solidsoft.pitest.gradle.plugin", version.ref = "plugin-pitest" }
+# https://plugins.gradle.org/plugin/com.diffplug.spotless
+plugin-spotless = { group = "com.diffplug.spotless", name = "com.diffplug.spotless.gradle.plugin", version.ref = "plugin-spotless" }
 
 [plugins]
 # https://maven.blamejared.com/net/mezzdev/java-formatting/net.mezzdev.java-formatting.gradle.plugin/maven-metadata.xml
