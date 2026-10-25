@@ -1,6 +1,7 @@
 [versions]
 # Common
 java = "25"
+kotlin = "2.4.21"
 
 # Testing
 junit = "6.1.3"
@@ -11,11 +12,11 @@ pitest-junit5 = "1.2.2"
 plugin-java-formatting = "0.4.0"
 plugin-changelog = "2.5.0"
 plugin-spotless-changelog = "3.1.2"
+plugin-dokka = "2.2.0"
 
 [libraries]
 # Testing
 junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
-junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
 junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-engine" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
@@ -26,6 +27,8 @@ mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter",
 plugin-changelog = { group = "org.jetbrains.changelog", name = "org.jetbrains.changelog.gradle.plugin", version.ref = "plugin-changelog" }
 # https://plugins.gradle.org/plugin/com.diffplug.spotless-changelog
 plugin-spotless-changelog = { group = "com.diffplug.spotless-changelog", name = "spotless-changelog-plugin-gradle", version.ref = "plugin-spotless-changelog" }
+# https://plugins.gradle.org/plugin/org.jetbrains.dokka
+plugin-dokka = { group = "org.jetbrains.dokka", name = "org.jetbrains.dokka.gradle.plugin", version.ref = "plugin-dokka" }
 
 [plugins]
 # https://maven.blamejared.com/net/mezzdev/java-formatting/net.mezzdev.java-formatting.gradle.plugin/maven-metadata.xml
