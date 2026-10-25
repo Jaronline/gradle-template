@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Added
 
+- buildSrc: Test plugin with JUnit Platform 
 - GitHub: Release workflow with SSH signing
 - buildSrc: Project plugin with automatic version
 - buildSrc: Changelog configuration and plugin with `org.jetbrains.changelog` and `com.diffplug.spotless-changelog`

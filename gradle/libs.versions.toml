@@ -1,10 +1,26 @@
 [versions]
+# Common
+java = "25"
+
+# Testing
+junit = "6.1.3"
+mockito = "5.23.0"
+pitest-junit5 = "1.2.2"
+
 # Plugins
 plugin-java-formatting = "0.4.0"
 plugin-changelog = "2.5.0"
 plugin-spotless-changelog = "3.1.2"
 
 [libraries]
+# Testing
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-engine" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito" }
+
 # Plugins
 # https://plugins.gradle.org/plugin/org.jetbrains.changelog
 plugin-changelog = { group = "org.jetbrains.changelog", name = "org.jetbrains.changelog.gradle.plugin", version.ref = "plugin-changelog" }

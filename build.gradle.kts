@@ -1,5 +1,6 @@
 plugins {
     id("dev.jaronline.project")
+    id("dev.jaronline.test")
     alias(libs.plugins.java.formatting)
 }
 
