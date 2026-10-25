@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Added
 
+- buildSrc: Test coverage plugin with JaCoCo and PITest
 - buildSrc: Mockito plugin for test mocking
 - buildSrc: Kotlin project plugin
 - buildSrc: Test plugin with JUnit Platform 
