@@ -7,16 +7,13 @@ repositories {
 }
 
 dependencies {
+	implementation(project(":build-properties"))
 	implementation(libs.plugin.changelog)
 	implementation(libs.plugin.spotless.changelog)
 }
 
 gradlePlugin {
 	plugins {
-		register("buildProperties") {
-			id = "dev.jaronline.build-properties"
-			implementationClass = "dev.jaronline.gradle.BuildPropertiesPlugin"
-		}
 		register("changelog") {
 			id = "dev.jaronline.changelog"
 			implementationClass = "dev.jaronline.gradle.ChangelogPlugin"

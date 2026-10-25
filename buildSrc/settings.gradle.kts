@@ -5,3 +5,8 @@ dependencyResolutionManagement {
         }
     }
 }
+
+rootProject.name = "buildSrc"
+include(
+    "build-properties"
+)
