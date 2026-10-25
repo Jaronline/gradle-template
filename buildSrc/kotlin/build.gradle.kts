@@ -10,6 +10,7 @@ dependencies {
 	implementation(project(":build-properties"))
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
 	implementation(libs.plugin.dokka)
+	implementation(libs.plugin.spotless)
 }
 
 gradlePlugin {
@@ -17,6 +18,10 @@ gradlePlugin {
 		register("kotlin") {
 			id = "dev.jaronline.kotlin"
 			implementationClass = "dev.jaronline.gradle.kotlin.KotlinPlugin"
+		}
+		register("kotlinFormatting") {
+			id = "dev.jaronline.kotlin.formatting"
+			implementationClass = "dev.jaronline.gradle.kotlin.KotlinFormattingPlugin"
 		}
 	}
 }
