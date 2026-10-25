@@ -49,11 +49,34 @@ jobs:
           chmod +x gradlew
           ./gradlew check
 
+  gh-check:
+    name: GitHub meta check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+        with:
+          sparse-checkout: .github/workflows
+      - name: Install GitHub CLI extensions
+        run: gh extension install github/gh-actions-lock
+      - name: Lock GitHub actions
+        run: gh actions-lock
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Detect changes
+        run: |
+          if ! git diff --exit-code .github/workflows/actions.lock >/dev/null 2>&1; then
+            echo ::error::Changes found in actions.lock. Please lock the actions using gh actions-lock!
+            exit 1
+          fi
+          exit 0
+
   summary:
     name: CI Summary
     needs:
       - build
       - check
+      - gh-check
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -65,3 +88,7 @@ jobs:
         uses: Jaronline/.github/actions/check-job-or-step-result@main
         with:
           result: ${{ needs.check.result }}
+      - name: Check GH Check Result
+        uses: Jaronline/.github/actions/check-job-or-step-result@main
+        with:
+          result: ${{ needs.gh-check.result }}
