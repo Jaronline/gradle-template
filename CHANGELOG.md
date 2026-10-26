@@ -8,15 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Added
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
+- GitHub: release workflow now automatically detects and creates prerelease GitHub releases
 
 ## [0.1.2] - 2026-10-26
 

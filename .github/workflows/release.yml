@@ -102,7 +102,21 @@ jobs:
         run: |
           git tag -s -m "${{ steps.next_version.outputs.tag }}" ${{ steps.next_version.outputs.tag }}
           git push --tags origin
+      - name: Parse SemVer
+        id: semver
+        uses: Jaronline/actions/semver@main
+        with:
+          version: ${{ steps.next_version.outputs.version }}
+      - name: Check Prerelease
+        id: prerelease
+        run: |
+          echo is_prerelease="${{ (steps.semver.outputs.major == '0' || steps.semver.outputs.prerelease != '') && 'true' || 'false' }}" >> "$GITHUB_OUTPUT"
+      - name: Create prerelease
+        if: steps.prerelease.outputs.is_prerelease == 'true'
+        run: |
+          gh release create ${{ steps.next_version.outputs.tag }} --latest --notes-file release-notes.md --verify-tag --prerelease
       - name: Create release
+        if: steps.prerelease.outputs.is_prerelease == 'false'
         run: |
           gh release create ${{ steps.next_version.outputs.tag }} --latest --notes-file release-notes.md --verify-tag
         env:
