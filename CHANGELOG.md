@@ -6,17 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
+I once again forgot to add the GH_TOKEN environment variable correctly. Oops...
 
 ### Fixed
 
-### Security
+- GitHub: added missing GH_TOKEN environment variable to prerelease in release workflow
 
 ## [0.2.0] - 2026-10-26
 

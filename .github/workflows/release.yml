@@ -115,6 +115,8 @@ jobs:
         if: steps.prerelease.outputs.is_prerelease == 'true'
         run: |
           gh release create ${{ steps.next_version.outputs.tag }} --latest --notes-file release-notes.md --verify-tag --prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create release
         if: steps.prerelease.outputs.is_prerelease == 'false'
         run: |
