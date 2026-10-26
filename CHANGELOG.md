@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.1.1] - 2026-10-26
+
 ### Fixed
 
 - GitHub: use GH_TOKEN environment variable instead of GITHUB_TOKEN for the GitHub CLI in release workflow
@@ -34,5 +48,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 - Basic `.gitattributes` for Java projects
 - Basic `.gitignore` for Java with Gradle projects
 
-[Unreleased]: https://github.com/Jaronline/gradle-template/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Jaronline/gradle-template/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Jaronline/gradle-template/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/Jaronline/gradle-template/commits/v0.1.0
