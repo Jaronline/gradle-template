@@ -35,6 +35,8 @@ plugin-dokka = { group = "org.jetbrains.dokka", name = "org.jetbrains.dokka.grad
 plugin-pitest = { group = "info.solidsoft.pitest", name = "info.solidsoft.pitest.gradle.plugin", version.ref = "plugin-pitest" }
 # https://plugins.gradle.org/plugin/com.diffplug.spotless
 plugin-spotless = { group = "com.diffplug.spotless", name = "com.diffplug.spotless.gradle.plugin", version.ref = "plugin-spotless" }
+# https://plugins.gradle.org/plugin/info.solidsoft.pitest.aggregator
+plugin-pitest-aggregator = { group = "info.solidsoft.pitest.aggregator", name = "info.solidsoft.pitest.aggregator.gradle.plugin", version.ref = "plugin-pitest" }
 
 [plugins]
 # https://maven.blamejared.com/net/mezzdev/java-formatting/net.mezzdev.java-formatting.gradle.plugin/maven-metadata.xml

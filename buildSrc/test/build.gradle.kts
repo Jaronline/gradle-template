@@ -21,10 +21,6 @@ gradlePlugin {
 			id = "dev.jaronline.test.mockito"
 			implementationClass = "dev.jaronline.gradle.test.MockitoPlugin"
 		}
-		register("coverage") {
-			id = "dev.jaronline.test.coverage"
-			implementationClass = "dev.jaronline.gradle.test.CoveragePlugin"
-		}
 	}
 }
 
