@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.1.0] - 2026-10-26
+
+### Added
+
 - buildSrc: Report aggregation plugin with JaCoCo and PITest
 - buildSrc: Kotlin formatting plugin
 - buildSrc: Test coverage plugin with JaCoCo and PITest
@@ -28,4 +42,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 - Basic `.gitattributes` for Java projects
 - Basic `.gitignore` for Java with Gradle projects
 
-[Unreleased]: https://github.com/Jaronline/gradle-template/commits
+[Unreleased]: https://github.com/Jaronline/gradle-template/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Jaronline/gradle-template/commits/v0.1.0
