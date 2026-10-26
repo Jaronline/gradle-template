@@ -22,15 +22,28 @@ concurrency:
 env:
   JAVA_DISTRIBUTION: ${{ vars.JAVA_DISTRIBUTION || 'microsoft' }}
   JAVA_VERSION: ${{ vars.JAVA_VERSION || 25 }}
-  WORKING_DIRECTORY: ${{ inputs.project == 'all' && '.' || inputs.project }}
-  GRADLE_PROJECT_PREFIX: ${{ inputs.project == 'all' && '' || format(':{0}', inputs.project) }}
-  GIT_TAG_PREFIX: ${{ inputs.project == 'all' && 'v' || format('{0}@', inputs.project) }}
-  GIT_COMMIT_SCOPE: ${{ inputs.project == 'all' && '' || format('({0})', inputs.project) }}
 
 jobs:
+  determine-release-properties:
+    runs-on: ubuntu-latest
+    outputs:
+      working-directory: ${{ steps.properties.outputs.working_directory }}
+      gradle-project-prefix: ${{ steps.properties.outputs.gradle_project_prefix }}
+      git-tag-prefix: ${{ steps.properties.outputs.git_tag_prefix }}
+      git-commit-scope: ${{ steps.properties.outputs.git_commit_scope }}
+    steps:
+      - name: Determine properties
+        id: properties
+        run: |
+          echo working_directory=${{ inputs.project == 'all' && '.' || inputs.project }} >> "$GITHUB_OUTPUT"
+          echo gradle_project_prefix=${{ inputs.project == 'all' && '' || format(':{0}:', inputs.project) }} >> "$GITHUB_OUTPUT"
+          echo git_tag_prefix=${{ inputs.project == 'all' && 'v' || format('{0}@', inputs.project) }} >> "$GITHUB_OUTPUT"
+          echo git_commit_scope=${{ inputs.project == 'all' && '' || format('({0})', inputs.project) }} >> "$GITHUB_OUTPUT"
+
   release:
     name: Release
     runs-on: ubuntu-latest
+    needs: determine-release-properties
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7.0.1
@@ -63,20 +76,22 @@ jobs:
         env:
           GITHUB_USER: ${{ vars.CI_USER }}
           GITHUB_EMAIL: ${{ vars.CI_EMAIL }}
-      - name: Get Gradle properties
+      - name: Get Next Version
         id: next_version
         run: |
-          echo version=$(./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:properties --property=version -q | grep -Po '(?<=version: ).*') >> "$GITHUB_OUTPUT"
+          version="$(./gradlew ${{ needs.determine-release-properties.outputs.gradle-project-prefix }}properties --property=version -q | grep -Po '(?<=version: ).*')"
+          echo version="$version" >> "$GITHUB_OUTPUT"
+          echo tag="${{ needs.determine-release-properties.outputs.git-tag-prefix }}$version"
       - name: Check tag existence
         run: |
-          if git rev-parse "${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}" >/dev/null 2>&1; then
-            echo ::error::Tag ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }} already exists!
+          if git rev-parse "${{ steps.next_version.outputs.tag }}" >/dev/null 2>&1; then
+            echo ::error::Tag ${{ steps.next_version.outputs.tag }} already exists!
             exit 1
           fi
           exit 0
       - name: Patch changelog
         run: |
-          ./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:patchChangelog
+          ./gradlew ${{ needs.determine-release-properties.outputs.gradle-project-prefix }}patchChangelog
       - name: Check changes in CHANGELOG.md
         run: |
           if git diff --exit-code CHANGELOG.md >/dev/null 2>&1; then
@@ -84,27 +99,27 @@ jobs:
             exit 1
           fi
           exit 0
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ needs.determine-release-properties.outputs.working-directory }}
       - name: Get release notes
         run: |
-          ./gradlew ${{ env.GRADLE_PROJECT_PREFIX }}:getChangelog --no-header --no-empty-sections --project-version=${{ steps.next_version.outputs.version }} --output-file=release-notes.md
+          ./gradlew ${{ needs.determine-release-properties.outputs.gradle-project-prefix }}getChangelog --no-header --no-empty-sections --project-version=${{ steps.next_version.outputs.version }} --output-file=release-notes.md
       - name: Commit changelog
         run: |
           git add CHANGELOG.md
-          git commit -m "chore${{ env.GIT_COMMIT_SCOPE }}: release ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}"
+          git commit -m "chore${{ needs.determine-release-properties.outputs.git-commit-scope }}: release ${{ steps.next_version.outputs.tag }}"
           git pull --rebase origin main
           git push origin main
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ needs.determine-release-properties.outputs.working-directory }}
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       - name: Create tag
         run: |
-          git tag -s -m "${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}" ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }}
+          git tag -s -m "${{ steps.next_version.outputs.tag }}" ${{ steps.next_version.outputs.tag }}
           git push --tags origin
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       - name: Create release
         run: |
-          gh release create ${{ env.GIT_TAG_PREFIX }}${{ steps.next_version.outputs.version }} --latest --notes-file release-notes.md --verify-tag
+          gh release create ${{ steps.next_version.outputs.tag }} --latest --notes-file release-notes.md --verify-tag
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
