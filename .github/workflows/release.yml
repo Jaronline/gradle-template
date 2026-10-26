@@ -54,8 +54,8 @@ jobs:
           SSH_SIGNING_KEY: ${{ secrets.CI_SSH_SIGNING_KEY }}
       - name: Configure Git
         run: |
-          git config --local user.email "${GITHUB_EMAIL}"
-          git config --local user.name "${GITHUB_USER}"
+          git config --local user.email "${{ env.GITHUB_EMAIL }}"
+          git config --local user.name "${{ env.GITHUB_USER }}"
           git config --local gpg.format ssh
           git config --local user.signingkey ~/.ssh/signing_key.pub
           git config --local commit.gpgsign true
