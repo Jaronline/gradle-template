@@ -98,16 +98,12 @@ jobs:
           git pull --rebase origin main
           git push origin main
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       - name: Create tag
         run: |
           git tag -s -m "${{ steps.next_version.outputs.tag }}" ${{ steps.next_version.outputs.tag }}
           git push --tags origin
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       - name: Create release
         run: |
           gh release create ${{ steps.next_version.outputs.tag }} --latest --notes-file release-notes.md --verify-tag
         env:
-          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
