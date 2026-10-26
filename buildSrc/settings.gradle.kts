@@ -14,4 +14,6 @@ include(
 	"kotlin",
 	// Remove this along with the test directory if you don't need to test
 	"test",
+	// Remove this along with the report directory if you don't need test coverage
+	"report",
 )
