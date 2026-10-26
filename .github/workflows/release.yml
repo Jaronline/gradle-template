@@ -37,6 +37,7 @@ jobs:
         with:
           ref: main
           fetch-tags: true
+          ssh-key: ${{ secrets.CI_SSH_AUTH_KEY }}
       - name: Setup Java
         uses: actions/setup-java@v6.1.0
         with:
