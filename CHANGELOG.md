@@ -6,17 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
 ### Fixed
 
-### Security
+- GitHub: use GH_TOKEN environment variable instead of GITHUB_TOKEN for the GitHub CLI in release workflow
 
 ## [0.1.0] - 2026-10-26
 
