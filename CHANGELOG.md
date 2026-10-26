@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.1.2] - 2026-10-26
+
 ### Fixed
 
 - GitHub: fix usage of GITHUB_TOKEN in release workflow
@@ -42,6 +56,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 - Basic `.gitattributes` for Java projects
 - Basic `.gitignore` for Java with Gradle projects
 
-[Unreleased]: https://github.com/Jaronline/gradle-template/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/Jaronline/gradle-template/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/Jaronline/gradle-template/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/Jaronline/gradle-template/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/Jaronline/gradle-template/commits/v0.1.0
