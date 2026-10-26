@@ -6,19 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
 ### Fixed
 
-### Security
+- GitHub: fix usage of GITHUB_TOKEN in release workflow
 
 ## [0.1.1] - 2026-10-26
+
+**Warning:** This release has not fixed the bug from version 0.1.0 and should not be used!
 
 ### Fixed
 
