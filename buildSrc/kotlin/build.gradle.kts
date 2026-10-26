@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
 	implementation(project(":build-properties"))
-    implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
+	implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
 	implementation(libs.plugin.dokka)
 	implementation(libs.plugin.spotless)
 }
