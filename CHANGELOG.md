@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 
 ### Security
 
+- GitHub: changed pr-triage workflow contents permissions from write to read
+
 ## [0.2.1] - 2026-10-26
 
 I once again forgot to add the GH_TOKEN environment variable correctly. Oops...
